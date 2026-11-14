@@ -1,0 +1,26 @@
+node_modules/
+dist/
+releases/
+# SEGREDOS — nunca versionar
+keystore/
+android/keystore.properties
+*.jks
+*.keystore
+*.p12
+*.mobileprovision
+# build nativo
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/capacitor-cordova-android-plugins/
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+ios/App/build/
+ios/App/Pods/
+ios/DerivedData/
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/CapApp-SPM/.build/
+.DS_Store

@@ -1,0 +1,29 @@
+{
+  "appId": "br.com.supervilton.checklist",
+  "appName": "Checklist Gestão",
+  "webDir": "dist",
+  "backgroundColor": "#F3EDE4",
+  "android": {
+    "backgroundColor": "#F3EDE4",
+    "allowMixedContent": false
+  },
+  "ios": {
+    "backgroundColor": "#F3EDE4",
+    "contentInset": "never",
+    "scrollEnabled": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "launchAutoHide": false,
+      "backgroundColor": "#1A120E",
+      "showSpinner": false,
+      "androidScaleType": "CENTER_CROP"
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#1A120E",
+      "overlaysWebView": false
+    }
+  }
+}

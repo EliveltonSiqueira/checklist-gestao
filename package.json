@@ -1,0 +1,33 @@
+{
+  "name": "checklist-gestao",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/gen-sw.mjs",
+    "assets": "node scripts/make-icons.mjs && capacitor-assets generate --android --ios",
+    "build:all": "npm run build && cap sync",
+    "android:release": "node scripts/android-release.mjs"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/camera": "^8.2.6",
+    "@capacitor/cli": "^8.6.2",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/filesystem": "^8.1.5",
+    "@capacitor/ios": "^8.6.2",
+    "@capacitor/preferences": "^8.0.1",
+    "@capacitor/share": "^8.0.3",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.4",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.9",
+    "vite": "^8.3.8"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^4.0.0",
+    "sharp": "^0.35.5"
+  }
+}

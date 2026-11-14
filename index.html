@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Checklist de Gestão — Abertura e Fechamento</title>
+<meta name="theme-color" content="#1A120E">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Checklist">
+<link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+<header>
+  <div class="brand" id="brand"></div>
+  <h1 id="title">Checklist Gestão Abertura</h1>
+  <div class="seg" role="tablist">
+    <button id="tab-abertura" class="active" data-tipo="abertura">Abertura</button>
+    <button id="tab-fechamento" data-tipo="fechamento">Fechamento</button>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Identificação</h2>
+    <div class="grid">
+      <div class="full">
+        <label class="f" for="nome">Responsável (encarregado)</label>
+        <input type="text" id="nome" placeholder="Nome de quem está fazendo o checklist" autocomplete="name">
+      </div>
+      <div>
+        <label class="f" for="loja">Loja</label>
+        <select id="loja"></select>
+      </div>
+      <div>
+        <label class="f" for="data">Data</label>
+        <input type="date" id="data">
+      </div>
+    </div>
+    <div class="hint" id="inicioInfo"></div>
+  </section>
+
+  <div class="progress">
+    <div class="ptop"><span><b id="pDone">0</b> de <span id="pTotal">0</span> respondidos</span><span id="pPct">0%</span></div>
+    <div class="bar"><i id="pBar"></i></div>
+    <div class="chips">
+      <span class="chip ok" id="cC">0 conforme</span>
+      <span class="chip nc" id="cNC">0 não conforme</span>
+      <span class="chip na" id="cNA">0 não se aplica</span>
+      <span class="chip pct" id="cPct">Conformidade —</span>
+    </div>
+  </div>
+
+  <div id="list"></div>
+  <div class="credit" id="credit"></div>
+</main>
+
+<div class="actions"><div class="in">
+  <button class="btn sec" id="btnNovo">Novo</button>
+  <button class="btn pri" id="btnPdf">Gerar PDF</button>
+</div></div>
+
+<div class="overlay" id="overlay"><div class="dialog">
+  <h3 id="dTitle"></h3><p id="dMsg"></p>
+  <div class="row" id="dRow"><button class="btn sec" id="dNo">Cancelar</button><button class="btn pri" id="dYes">Confirmar</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="fileIn" accept="image/*" multiple hidden>
+
+<script type="module" src="./src/app.js"></script>
+</body>
+</html>
