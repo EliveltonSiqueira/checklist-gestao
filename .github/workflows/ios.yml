@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: macos-15
+    env:
+      P12_B64: ${{ secrets.IOS_CERT_P12_BASE64 }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -19,8 +21,6 @@ jobs:
 
       - name: Compilar para simulador (validação)
         if: env.P12_B64 == ''
-        env:
-          P12_B64: ${{ secrets.IOS_CERT_P12_BASE64 }}
         run: |
           xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug \
             -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
@@ -29,7 +29,6 @@ jobs:
       - name: Importar certificado e perfil
         if: env.P12_B64 != ''
         env:
-          P12_B64: ${{ secrets.IOS_CERT_P12_BASE64 }}
           P12_PASS: ${{ secrets.IOS_CERT_PASSWORD }}
           PROFILE_B64: ${{ secrets.IOS_PROVISIONING_PROFILE_BASE64 }}
           KC_PASS: ${{ github.run_id }}
@@ -46,7 +45,6 @@ jobs:
       - name: Arquivar e exportar .ipa
         if: env.P12_B64 != ''
         env:
-          P12_B64: ${{ secrets.IOS_CERT_P12_BASE64 }}
           TEAM_ID: ${{ secrets.IOS_TEAM_ID }}
           PROFILE_NAME: ${{ secrets.IOS_PROVISIONING_PROFILE_NAME }}
         run: |
@@ -69,8 +67,6 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         if: env.P12_B64 != ''
-        env:
-          P12_B64: ${{ secrets.IOS_CERT_P12_BASE64 }}
         with:
           name: checklist-gestao-ios
           path: ${{ runner.temp }}/ipa/*.ipa
