@@ -47,7 +47,7 @@ function render() {
 }
 function itemHTML(it, id, n) {
   const a = state[tipo].resp[id] || { s: "", obs: "", fotos: [] };
-  const showCam = it.foto || a.s === "NC" || a.fotos.length;
+  const showCam = true;
   const showObs = a.obs || a.s === "NC";
   return `<div class="item ${a.s ? "s-" + a.s : ""}" id="it-${id}" data-id="${id}">
     <div class="q"><div class="num">${n}</div><p>${esc(it.t)}</p></div>
