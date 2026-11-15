@@ -94,7 +94,7 @@ export async function savePdf(doc, fn) {
     const b64 = dataUri.slice(dataUri.indexOf("base64,") + 7);
     const w = await Filesystem.writeFile({ path: fn, data: b64, directory: Directory.Cache });
     try {
-      await Share.share({ title: fn, dialogTitle: "Compartilhar checklist", url: w.uri });
+      await Share.share({ dialogTitle: "Enviar checklist", files: [w.uri] });
       return "shared";
     } catch (e) {
       if (/cancel/i.test(String((e && e.message) || e))) return "cancelled";
@@ -133,7 +133,7 @@ function pdfPronto(file, blob, fn) {
       if (!x) { if (e.target === ov) fim("cancelled"); return; }
       if (x === "fechar") return fim("cancelled");
       if (x === "salvar") { baixarPdf(blob, fn); return fim("downloaded"); }
-      try { await navigator.share({ files: [file], title: fn }); fim("shared"); }
+      try { await navigator.share({ files: [file] }); fim("shared"); }
       catch (err) { if (err && err.name === "AbortError") return; baixarPdf(blob, fn); fim("downloaded"); }
     });
     document.body.appendChild(ov);
