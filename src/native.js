@@ -102,9 +102,40 @@ export async function savePdf(doc, fn) {
     }
   }
   const blob = doc.output("blob");
+  const file = new File([blob], fn, { type: "application/pdf" });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) return pdfPronto(file, blob, fn);
+  baixarPdf(blob, fn);
+  return "downloaded";
+}
+
+function baixarPdf(blob, fn) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a"); a.href = url; a.download = fn; a.rel = "noopener";
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 60000);
-  return "downloaded";
+}
+
+/* Celular (navegador/PWA): mostra "PDF pronto" e o toque em Enviar abre o WhatsApp/compartilhar. */
+function pdfPronto(file, blob, fn) {
+  return new Promise(resolve => {
+    const ov = document.createElement("div");
+    ov.style.cssText = "position:fixed;inset:0;z-index:99;background:rgba(26,18,14,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px";
+    ov.innerHTML = '<div style="background:#FCFAF6;border-radius:18px;padding:18px;width:100%;max-width:440px;margin-bottom:env(safe-area-inset-bottom)">'
+      + '<h3 style="margin:0 0 6px;font-size:17px;color:#1A120E">PDF pronto</h3>'
+      + '<p style="margin:0 0 16px;color:#7A6E64">Toque em <b>Enviar</b> e escolha o WhatsApp.</p>'
+      + '<button class="btn pri" data-x="enviar" style="width:100%;margin-bottom:8px">Enviar pelo WhatsApp</button>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
+      + '<button class="btn sec" data-x="salvar">Salvar no celular</button>'
+      + '<button class="btn sec" data-x="fechar">Fechar</button></div></div>';
+    const fim = r => { ov.remove(); resolve(r); };
+    ov.addEventListener("click", async e => {
+      const x = e.target.closest("[data-x]")?.dataset.x;
+      if (!x) { if (e.target === ov) fim("cancelled"); return; }
+      if (x === "fechar") return fim("cancelled");
+      if (x === "salvar") { baixarPdf(blob, fn); return fim("downloaded"); }
+      try { await navigator.share({ files: [file], title: fn }); fim("shared"); }
+      catch (err) { if (err && err.name === "AbortError") return; baixarPdf(blob, fn); fim("downloaded"); }
+    });
+    document.body.appendChild(ov);
+  });
 }

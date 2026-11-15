@@ -56,7 +56,7 @@ function itemHTML(it, id, n) {
     </div>
     <div class="tools">
       <button class="tbtn" data-act="obs">${ICON_TXT} Observação</button>
-      ${showCam ? `<button class="tbtn ${a.s === "NC" && !a.fotos.length ? "need" : ""}" data-act="foto">${ICON_CAM} Foto${a.fotos.length ? " (" + a.fotos.length + ")" : ""}</button>` : ""}
+      ${showCam ? `<button class="tbtn" data-act="foto">${ICON_CAM} Foto${a.fotos.length ? " (" + a.fotos.length + ")" : ""}</button>` : ""}
     </div>
     <div class="obs ${showObs ? "show" : ""}"><textarea data-act="obstxt" placeholder="${a.s === "NC" ? "Descreva a não conformidade e a ação tomada" : "Observação (opcional)"}">${esc(a.obs)}</textarea></div>
     ${a.fotos.length ? `<div class="thumbs">${a.fotos.map((f, i) => `<div class="thumb"><img src="${f}" alt="Foto ${i + 1}"><button data-act="rmfoto" data-i="${i}" aria-label="Remover foto">×</button></div>`).join("")}</div>` : ""}
